@@ -1,0 +1,8 @@
+{
+  "name": "tcc-ionic",
+  "integrations": {
+    "cordova": {}
+  },
+  "proxies": [],
+  "type": "ionic-angular"
+}
