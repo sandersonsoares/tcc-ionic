@@ -1,0 +1,57 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>tasks</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<style>
+  .card, .item-md {
+    background-color: #fffcb0;
+  / / black
+  }
+</style>
+
+
+<ion-content padding>
+  <ion-refresher (ionRefresh)="loadTasks($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <h3>Minhas Tarefas</h3>
+  <hr>
+
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (click)="addTask()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-card *ngFor="let task of tasks">
+    <ion-card-header>
+      <ion-input type="text" [(ngModel)]="task.title" (ionBlur)="updateOrSave(task)"></ion-input>
+    </ion-card-header>
+    <hr>
+    <ion-card-content>
+      <ion-textarea (ionBlur)="updateOrSave(task)" [(ngModel)]="task.description"></ion-textarea>
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col col-10 padding>
+        <div>
+          <small><i>última modificação: {{task.updated_at | date:'dd/MM/yyyy HH:mm'}}</i></small>
+        </div>
+      </ion-col>
+      <ion-col col-2 right text-right>
+        <ion-note>
+          <button ion-button clear color="danger" small icon-only (click)="removeTask(task)">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </ion-note>
+      </ion-col>
+    </ion-row>
+
+
+  </ion-card>
+</ion-content>

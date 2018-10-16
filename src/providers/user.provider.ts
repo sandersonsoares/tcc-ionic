@@ -1,30 +1,26 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {DefaultProvider} from './default.provider';
-import {DefaultInterface} from "../interfaces/default.interface";
 import {UserInterface} from "../interfaces/user.interface";
+import {DefaultInterface} from "../interfaces/default.interface";
 import {User} from "../models/user";
 
 @Injectable()
 export class UserProvider extends DefaultProvider {
 
-  token: string = null;
+  private token: string = 'aslkdjalskjd'
 
-  constructor(private http: HttpClient, private storage: Storage) {
+  constructor(private http: HttpClient) {
     super();
-
-    storage.get('token').then((val) => {
-      this.token = val;
-    });
   }
 
   /**
    Lista as informações do usário logado.
    */
-  public info() {
-    return this.http.get<UserInterface>(this.URL + '/user'), {
-      headers: new HttpHeaders().set('Authorization', this.token)
-    };
+  public info(token: string) {
+    return this.http.get<UserInterface>(this.URL + '/user', {
+      headers: new HttpHeaders().set('Authorization', token)
+    });
   }
 
   /**
@@ -39,10 +35,10 @@ export class UserProvider extends DefaultProvider {
   /**
    Edita uma task
    */
-  public update(user: User) {
-    return this.http.put<DefaultInterface>(this.URL + '/user', user), {
-      headers: new HttpHeaders().set('Authorization', this.token)
-    };
+  public update(user: User, token: string) {
+    return this.http.put<DefaultInterface>(this.URL + '/user', user, {
+      headers: new HttpHeaders().set('Authorization', token)
+    });
   }
 
 }

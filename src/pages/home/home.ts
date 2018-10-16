@@ -1,15 +1,19 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
-import {AuthProvider} from "../../providers/auth.provider";
+import {TasksPage} from "../tasks/tasks";
+import {ProfilePage} from "../profile/profile";
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private authProvider: AuthProvider) {
-    this.authProvider.getToken().then(token => { console.log(token) });
+  public tab1 = TasksPage;
+  public tab2 = HomePage;
+  public tab3 = ProfilePage;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
 }

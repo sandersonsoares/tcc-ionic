@@ -18,29 +18,24 @@ export class LoginPage extends DefaultPage {
   constructor(public navCtrl: NavController, private authProvider: AuthProvider,
               private toastCtrl: ToastController, private loadingController: LoadingController) {
     super();
-    this.loading = this.loadingController.create();
-
-    this.authProvider.getToken().then(token => {
-      if (token) {
-        this.navCtrl.setRoot(HomePage);
-      }
-    });
   }
 
   public login() {
+    this.loading = this.loadingController.create();
     this.loading.present();
 
     this.authProvider.authetication(this.user).subscribe(resp => {
+        this.loading.dismiss();
+
         if (resp.code === '000') {
           this.authProvider.saveToken(resp.token);
           this.navCtrl.setRoot(HomePage);
         } else {
-          this.toastCtrl.create({message: resp.message}).present();
+          this.toastCtrl.create({message: resp.message, duration: 3000}).present();
         }
-        this.loading.dismiss();
       },
       (err: HttpErrorResponse) => {
-        this.toastCtrl.create({message: err.statusText}).present();
+        this.toastCtrl.create({message: err.statusText, duration: 3000}).present();
         this.loading.dismiss();
       });
   }
